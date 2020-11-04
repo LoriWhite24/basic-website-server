@@ -11,12 +11,15 @@ const connection = mysql.createConnection({
     database: 'basic_website'
 });
 
-connection.connect();
+connection.connect((error) => {
+    if (error) throw error;
+    console.log('Mysql Connected...');
+});
 
 const port = process.env.PORT || 8080;
 
 const app = express().use(cors()).use(bodyParser.json()).use(users(connection));
 
-app.listen(port, () =&gt; {
+app.listen(port, () => {
     console.log('Express server listening on port ${port}');
 });
